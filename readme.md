@@ -4,42 +4,13 @@
 
 ## Getting Started
 
-* After downloading from GIT repo, place it, for example, in your /opt folder. 
-* Make the bashmonit.sh file available for execution (`chmod +x bashmonit.sh`)
-* At first launch, it will create your INI configuration file, and will be ready.
+* Clone the GIT repo
+* Make the installer file available for execution (`chmod +x install.sh`)
+* At first launch, it will create your configuration files, and will be ready.
 * Once launched, visit http://youserverip:80/?key=XXXXXXX (replace XXXXXXX by the key provided).
 
+### Output example
 
-### Prerequisites
-
-The daemon needs `ROOT` permissions and some packages such as :
-* nc
-* awk
-* netstat
-* sensors
-* bc
-At first launch, it will try to install them automatically.
-
-
-### First Run
-
-#### Port configuration
-
-The specified port (by default `80`) must be free of use. If not, the daemon will display the following message :
-`Port 80 already in use, please free this port or configure another one.`
-**2 solutions**
-1. Release the port (if 80, it may be Apache or nginx)
-2. Change the port in the INI file and relaunch the app
- 
-**Reminder** the specified port must be accessible from your bashmonit client, so your firewall (such as `iptables`) must keep this port opened.
-
-#### Key Configuration
-
-To avoid unauthorized access to your monitoring system, a key must be specified using GET parameter `key`, such as : http://youserverip:port/?key=XXXXXXX
-The key is automatically generated at first launch and stored in your INI configuration file.
-
-
-#### Output example
 ```json
 {
     "system": {
@@ -95,6 +66,59 @@ The key is automatically generated at first launch and stored in your INI config
 ```
 
 
+### Prerequisites
+
+The daemon needs `ROOT` permissions and some packages such as :
+* nc
+* awk
+* netstat
+* sensors
+* bc
+At first launch, it will try to install them automatically.
+
+The installation process has been successfully tested on Debian/Ubuntu distributions.
+
+### Installation & First Run
+
+#### Procedure
+
+- Make `install.sh` executable (chmod +x install.sh) and run it (./install.sh). It will copy the executable in `/usr/local/sbin/bashmonit`, and create configuration files in `/etc/bashmonit.d/` (for all sensors) and `/etc/bashmonit.conf` for general purposes
+- run by typing `bashmonit`
+
+#### Port configuration
+
+The specified port (by default `80`) must be free of use. If not, the daemon will display the following message :
+`Port 80 already in use, please free this port or configure another one.`
+
+**2 solutions**
+1. Release the port (if 80, it may be Apache or nginx)
+2. Change the port in the INI file and relaunch the app
+ 
+**Reminder** the specified port must be accessible from your bashmonit client, so your firewall (such as `iptables`) must keep this port opened.
+
+#### Key Configuration
+
+To avoid unauthorized access to your monitoring system, a key must be specified using GET parameter `key`, such as : http://youserverip:port/?key=XXXXXXX
+The key is automatically generated at first launch and stored in your configuration file.
+
+### Advanced onfiguration
+
+After installation, you can edit all sensors parameters by editing `/etc/bashmonit.d/*.conf` files (if any).
+Eg. : for `mysql` sensors, you can edit MYSQL credentials in `/etc/bashmonit.d/apps-mysql.conf` 
+
+
+### Use as a daemon
+
+There's no daemon currently provided. So if you want to use it permanently, many tools provide this feature, such as :
+- [Supervisor](http://supervisord.org/)
+- [Node.js PM2](https://pm2.keymetrics.io/)
+- [Node.js Forever](https://www.npmjs.com/package/forever)
+
+#### Example with PM2
+
+`pm2 start /usr/local/sbin/bashmonit --interpreter=bash --watch`
+
+
 ## Built With
 
 * [bashttp](http://www.dropwizard.io/1.0.2/docs/) - The base http shell script
@@ -109,12 +133,12 @@ Please feel free to contribute by submitting enhancement or new sensors !
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/charlyie/bashmonit/tags). 
 
 ### Changelog
-* **1.1.0** [dec 2018] : first official release.
+* **1.1.0** [dec 2018] : first official release (published in nov. 2019).
 * **1.0.0 - 1.0.9** [aug 2017-dec 2018]: internal releases.
 
 ## Authors
 
-**Charles Bourgeaux** - *Initial work* - [PurpleBooth](https://resmush.it)
+**Charles Bourgeaux** - *Initial work* - [reSmush.it](https://resmush.it)
 See also the list of [contributors](https://github.com/charlyie/bashmonit/contributors) who participated in this project.
 
 ## License
