@@ -11,7 +11,7 @@
 # as you leave these references intact in the header comments of your source files.
 
 APP_DIR=$(dirname "$0")
-REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc")
+REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc" "jq")
 
 # Requires ROOT for NC
 if [[ `id -u` -ne 0 ]]; then
@@ -56,9 +56,9 @@ then
   chmod +x /usr/local/sbin/bashmonit
   mkdir -p /etc/bashmonit.d
   cp $APP_DIR/sensors/* /etc/bashmonit.d/ -R
-  cp $APP_DIR/bashmonitd.sh /etc/init.d/bashmonit
-  chmod +x /etc/init.d/bashmonit
-  systemctl daemon-reload
+  #cp $APP_DIR/bashmonitd.sh /etc/init.d/bashmonit
+  #chmod +x /etc/init.d/bashmonit
+  #systemctl daemon-reload
   
   # Create log rotate entry if not exist
   if [ ! -f '/etc/logrotate.d/bashmonit' ]; then

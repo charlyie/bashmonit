@@ -133,6 +133,7 @@ Please feel free to contribute by submitting enhancement or new sensors !
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/charlyie/bashmonit/tags). 
 
 ### Changelog
+* **1.1.1** [nov 2019] : add autoupdate process 
 * **1.1.0** [dec 2018] : first official release (published in nov. 2019).
 * **1.0.0 - 1.0.9** [aug 2017-dec 2018]: internal releases.
 

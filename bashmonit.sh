@@ -12,9 +12,9 @@
 
 
 PORT=80
-VERSION="1.1.0"
-BUILD_DATE="20170908"
-REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc")
+VERSION="1.1.1"
+BUILD_DATE="20191118"
+REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc" "jq")
 
 HTTP_RESPONSE=/tmp/webresp
 APP_DIR=$(dirname "$0")
@@ -23,44 +23,166 @@ LOG="/var/log/bashmonit.log"
 INI="/etc/bashmonit.conf"
 FIRST_RUN=false
 QUIET=false
-
-
-while getopts ':hvq' option
-do
- case "${option}" in
-  h)  printf "Bashmonit v.${VERSION}, server Monitoring tool, extensible with custom sensors, and outputing a JSON on a standalone HTTP server\n"
-      printf "Usage: (as a daemon) /etc/init.d/bashmonit start\n"
-      printf "Usage: (one shot) bashmonit\n"
-      printf "Startup:\n"
-      printf "  -h \t\t print this help.\n"
-      printf "  -q \t\t run in QUIET mode.\n\n"
-      printf "  -v \t\t display the version of Bashmonit.\n\n"
-      printf "Logs:\n"
-      printf "  Output \t /var/log/bashmonit.log\n\n"
-      printf "Configuration:\n"
-      printf "  General \t /etc/bashmonit.conf\n"
-      printf "  Sensors \t /etc/bashmonit.d/*\n"
-      exit 0
-      ;;
-  v)  echo "Bashmonit v.${VERSION} (build ${BUILD_DATE})"
-      exit 0
-      ;;  
-  q)  QUIET=true
-      ;;
-  \?) echo "Invalid option: -$OPTARG. Type -h to show help" >&2 
-      exit 0
-      ;;
- esac
-done
+UPDATE_LOCKFILE="/tmp/.bashmonit.update"
 
 # Display output and save it to log file.
 cli_output(){
+  TIME="[`date '+%Y-%m-%d %H:%M:%S'`] "
+  if [[ $2 == "notime" ]]; then
+    TIME=""
+  fi
   if $QUIET ; then
-    echo "[`date '+%Y-%m-%d %H:%M:%S'`] $1" > ${LOG}
+    printf "${TIME}$1\n" > ${LOG}
   else
-    echo "[`date '+%Y-%m-%d %H:%M:%S'`] $1" | tee -a ${LOG}
+    #printf "${TIME}$1\n" | tee -a ${LOG}
+    printf "${TIME}$1\n"
   fi
 }
+
+
+check_update(){
+  _SCRIPT_NAME=`basename "$0" | cut -f 1 -d '.'`
+
+  # Perform update verification once a day
+  if [ -f ${UPDATE_LOCKFILE} ]; then
+    _UPDATE_LOCKFILE_VALUE=`cat $UPDATE_LOCKFILE`
+
+    if [[ $_UPDATE_LOCKFILE_VALUE == "false" ]]; then
+      if [[ $(find "${UPDATE_LOCKFILE}" -mtime -1 -print) ]]; then
+        return
+      fi
+    else
+      cli_output "An update is available. Run \`${_SCRIPT_NAME} --update\` to perform an upgrade"
+      return
+    fi
+    
+  fi
+  cli_output "Checking for update..."
+  _REQUEST_OUTPUT=`curl --silent "https://api.github.com/repos/charlyie/bashmonit/tags"`
+  _REMOTE_VERSION=`echo ${_REQUEST_OUTPUT} | jq -r '.[0].name'`
+  _TARBALL=`echo ${_REQUEST_OUTPUT} | jq -r '.[0].tarball_url'`
+
+  if [[ $_REMOTE_VERSION == "${VERSION}" ]]; then
+    cli_output "No update required (remote version is : ${_REMOTE_VERSION})"
+    if [ -f "${UPDATE_LOCKFILE}" ]; then
+      if [ -w $UPDATE_LOCKFILE ]; then
+        echo "false" > $UPDATE_LOCKFILE
+      else
+        cli_output "Cannot write temporary file $UPDATE_LOCKFILE, please check if this file is writeable"
+      fi
+    else
+      echo "false" > $UPDATE_LOCKFILE
+    fi
+  else
+    _INSTALL_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+    _SCRIPT_PATH=`echo ${_INSTALL_DIR}/${_SCRIPT_NAME}`
+
+    cli_output "An update is available (${_REMOTE_VERSION}). Run \`${_SCRIPT_NAME} --update\` to perform an upgrade"
+    if [ -f "${UPDATE_LOCKFILE}" ]; then
+      if [ -w $UPDATE_LOCKFILE ]; then
+        echo "true" > $UPDATE_LOCKFILE
+      else
+        cli_output "Cannot write temporary file $UPDATE_LOCKFILE, please check if this file is writeable"
+      fi
+    else
+      echo "true" > $UPDATE_LOCKFILE
+    fi
+  fi
+}
+
+do_update(){
+  _REQUEST_OUTPUT=`curl --silent "https://api.github.com/repos/charlyie/bashmonit/tags"`
+  _REMOTE_VERSION=`echo ${_REQUEST_OUTPUT} | jq -r '.[0].name'`
+  _TARBALL=`echo ${_REQUEST_OUTPUT} | jq -r '.[0].tarball_url'`
+
+  if [[ $_REQUEST_OUTPUT == "${VERSION}" ]]; then
+    cli_output "No update required (remote version is : ${_REMOTE_VERSION})"
+  else
+    _INSTALL_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+    _SCRIPT_NAME=`basename "$0"`
+    _SCRIPT_PATH=`echo ${_INSTALL_DIR}/${_SCRIPT_NAME}`
+
+    cli_output "> Local version  : ${VERSION}"
+    cli_output "> Remote version : ${_REMOTE_VERSION}"
+
+    if [[ "${VERSION}" !=  "${_REMOTE_VERSION}" ]]; then
+      cli_output "An update is available (${_REMOTE_VERSION}). Launching upgrade..."
+
+      cli_output "> Downloading from ${_TARBALL}..."
+      if [ -d "/tmp/bashmonit-last-release" ]; then
+        rm -rf /tmp/bashmonit-last-release
+      fi
+      mkdir -p /tmp/bashmonit-last-release
+      curl -L ${_TARBALL} --output /tmp/bashmonit-last-release.tar.gz --silent
+      cli_output "> Extracting tarball..."
+      tar xf /tmp/bashmonit-last-release.tar.gz -C /tmp/bashmonit-last-release
+      cli_output "> Executing install..."
+      chmod +x /tmp/bashmonit-last-release/*/install.sh
+      /tmp/bashmonit-last-release/*/install.sh
+      rm -f $UPDATE_LOCKFILE
+      exit 0
+    else
+      cli_output "No update available"
+    fi
+  fi
+}
+
+
+# Manage arguments
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -q|--quiet)
+    QUIET=true
+    shift # past argument
+    shift # past value
+    ;;
+    --update)
+    shift # past argument
+    do_update
+    exit 0
+    ;;
+    -h|--help)
+    shift # past argument
+    cli_output "Bashmonit v.${VERSION}, server Monitoring tool, extensible with custom sensors, and outputing a JSON on a standalone HTTP server" notime
+  cli_output "(c) Charles Bourgeaux <hello@resmush.it>" notime
+  cli_output "Usage: bashmonit [--quiet] [--update]" notime
+  cli_output "Startup:" notime
+  cli_output "  -h or --help \t\t print this help." notime
+  cli_output "  -v or --version \t display the version of Bashmonit" notime
+  cli_output "  --quiet \t\t avoid output display." notime
+  cli_output "  --update \t\t perform an upgrade of this app.\n" notime
+  cli_output "Logs:" notime
+  cli_output "  Output \t\t /var/log/bashmonit.log\n" notime
+  cli_output "Configuration:" notime
+  cli_output "  General \t\t /etc/bashmonit.conf" notime
+  cli_output "  Sensors \t\t /etc/bashmonit.d/*\n" notime
+  exit 0
+    ;;
+    -v|--version)
+    shift # past argument
+    cli_output "Bashmonit v.${VERSION} (build ${BUILD_DATE})" notime
+    exit 0
+    ;;
+    -*)    # unknown option
+    cli_output "Invalid option: ${1}. Type --help to show help" notime
+    shift
+    exit 0
+    ;;
+    --*)    # unknown option
+    cli_output "Invalid option: ${1}. Type --help to show help" notime
+    shift 
+    exit 0
+    ;;
+    *)    # unknown option
+    shift # past argument
+    ;;
+esac
+done
+
+
 
 cli_output "Starting daemon bashmonit..."
 # Requires ROOT for NC
@@ -68,6 +190,8 @@ if [[ `id -u` -ne 0 ]]; then
   cli_output "This daemon needs ROOT privileges. Please log as root or use sudo."
   exit 0
 fi
+
+check_update
 
 
 # Check required packages and try to install them
