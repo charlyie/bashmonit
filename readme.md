@@ -123,7 +123,6 @@ There's no daemon currently provided. So if you want to use it permanently, many
 
 ## Built With
 
-* [bashttp](http://www.dropwizard.io/1.0.2/docs/) - The base http shell script
 * [netcat web server](https://forums.hak5.org/index.php?/topic/30075-bash-netcat-only-web-server/) - the base of bashttp
 
 ## Contributing
