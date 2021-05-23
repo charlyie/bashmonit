@@ -14,8 +14,8 @@
 ```json
 {
     "system": {
-        "daemon": "bashmonit/1.0.8",
-        "generation_date": "Thu Sep  7 15:21:06 CEST 2017"
+        "daemon": "bashmonit/1.1.1",
+        "generation_date": "Sun May  23 14:21:06 CEST 2021"
     },
     "sensors": {
         "hardware": {
