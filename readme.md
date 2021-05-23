@@ -116,7 +116,9 @@ There's no daemon currently provided. So if you want to use it permanently, many
 
 #### Example with PM2
 
-`pm2 start /usr/local/sbin/bashmonit --interpreter=bash --watch`
+1. type `pm2 --name bashmonit -f start /usr/local/sbin/bashmonit --interpreter=bash` to run the process in background
+2. then type `pm2 save` to save this process to a file
+3. finally type `pm2 startup` to ensure that the process will be relaunch if server is rebooted.
 
 
 ## Built With
