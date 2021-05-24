@@ -7,7 +7,7 @@
 * Clone the GIT repo
 * Make the installer file available for execution (`chmod +x install.sh`)
 * At first launch, it will create your configuration files, and will be ready.
-* Once launched, visit http://youserverip:80/?key=XXXXXXX (replace XXXXXXX by the key provided).
+* Once launched, visit http://youserverip:8765/?key=XXXXXXX (replace XXXXXXX by the key provided).
 
 ### Output example
 
