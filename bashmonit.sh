@@ -1,19 +1,19 @@
 #!/bin/bash
-# bashmonit.sh -- http://127.0.0.1:8080/?key=XXXX
+# bashmonit.sh -- http://127.0.0.1:8765/?key=XXXX
 # chmod 755 bashmonit.sh
 # then run: ./bashmonit.sh
 #
 # Based on bashttp : webserver in bash
 #
 # The MIT License (MIT)
-# Copyright (c) 2017 Charles Bourgeaux <hello@resmush.it> and contributors
+# Copyright (c) 2017-2021 Charles Bourgeaux <charles@resmush.it> and contributors
 # You are not obligated to bundle the LICENSE file with your projects as long
 # as you leave these references intact in the header comments of your source files.
 
 
-PORT=80
-VERSION="1.1.1"
-BUILD_DATE="20191118"
+PORT=8765
+VERSION="1.2.0"
+BUILD_DATE="20210524"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc" "jq")
 
 HTTP_RESPONSE=/tmp/webresp
@@ -147,7 +147,7 @@ case $key in
     -h|--help)
     shift # past argument
     cli_output "Bashmonit v.${VERSION}, server Monitoring tool, extensible with custom sensors, and outputing a JSON on a standalone HTTP server" notime
-  cli_output "(c) Charles Bourgeaux <hello@resmush.it>" notime
+  cli_output "(c) Charles Bourgeaux <charles@resmush.it>" notime
   cli_output "Usage: bashmonit [--quiet] [--update]" notime
   cli_output "Startup:" notime
   cli_output "  -h or --help \t\t print this help." notime
@@ -345,7 +345,7 @@ fi
 cli_output "Server bashmonit/$VERSION (build $BUILD_DATE) started on port $PORT"
 
 if $FIRST_RUN ; then
-  cli_output "First run, you can get your data on http://127.0.0.1/?key=${KEY}"
+  cli_output "First run, you can get your data on http://127.0.0.1:${PORT}/?key=${KEY}"
 fi
 
 # Launch Webserver

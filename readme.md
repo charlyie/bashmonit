@@ -13,55 +13,64 @@
 
 ```json
 {
-    "system": {
-        "daemon": "bashmonit/1.1.1",
-        "generation_date": "Sun May  23 14:21:06 CEST 2021"
-    },
-    "sensors": {
-        "hardware": {
-            "cpu": {
-                "usage": "41%",
-                "cores": "2"
+   "system":{
+      "daemon":"bashmonit/1.2.0",
+      "generation_date":"Mon May  24 18:21:06 CEST 2021"
+   },
+   "sensors":{
+      "hardware":{
+         "cpu":{
+            "usage":"41%",
+            "cores":"2"
+         },
+         "disks":{
+            "/":{
+               "free":"4.0G",
+               "total":"37G",
+               "usage":"90%",
+               "device":"/dev/sda2"
             },
-            "disk": {
-                "free": "33G",
-                "total": "39G",
-                "usage": "12%"
-            },
-            "memory": {
-                "used": "405MB",
-                "total": "2000MB",
-                "usage": "20.25%"
-            },
-            "temperatures": {
-                "cpu": "35"
+            "/srv":{
+               "free":"2.0T",
+               "total":"37T",
+               "usage":"95%",
+               "device":"/dev/sda3"
             }
-        },
-        "apps": {
-            "mysql": {
-                "status": "online"
-            },
-            "php": {
-                "version": "7.1.8-2+ubuntu16.04.1+deb.sury.org+4"
+         },
+         "memory":{
+            "used":"405MB",
+            "total":"2000MB",
+            "usage":"20.25%"
+         },
+         "temperatures":{
+            "cpu":"35"
+         }
+      },
+      "apps":{
+         "mysql":{
+            "status":"online"
+         },
+         "php":{
+            "version":"7.1.8-2+ubuntu16.04.1+deb.sury.org+4"
+         }
+      },
+      "system":{
+         "os":{
+            "hostname":"developer",
+            "distro":"Ubuntu 16.04",
+            "uptime":"1 days, 22 hours, 12 minutes, 48 seconds"
+         },
+         "processes":{
+            "load_average":"0.06",
+            "count":"160",
+            "biggest":{
+               "command":"[kworker/0:2]",
+               "pid":"6328",
+               "cpu_usage":"0.8%"
             }
-        },
-        "system": {
-            "os": {
-                "hostname": "developer",
-                "distro": "Ubuntu 16.04",
-                "uptime": "1 days, 22 hours, 12 minutes, 48 seconds"
-            },
-            "processes": {
-                "load_average": "0.06",
-                "count": "160",
-                "biggest": {
-                    "command": "[kworker/0:2]",
-                    "pid": "6328",
-                    "cpu_usage": "0.8%"
-                }
-            }
-        }
-    }
+         }
+      }
+   }
 }
 ```
 
@@ -87,12 +96,13 @@ The installation process has been successfully tested on Debian/Ubuntu distribut
 
 #### Port configuration
 
-The specified port (by default `80`) must be free of use. If not, the daemon will display the following message :
-`Port 80 already in use, please free this port or configure another one.`
+The specified port (by default `8765`) must be free of use. If not, the daemon will display the following message :
+`Port 8765 already in use, please free this port or configure another one.`
 
-**2 solutions**
+**3 solutions**
 1. Release the port (if 80, it may be Apache or nginx)
 2. Change the port in the INI file and relaunch the app
+3. Check if a process is using your port by typing `lsof -i :8765` and kill the process if needed
  
 **Reminder** the specified port must be accessible from your bashmonit client, so your firewall (such as `iptables`) must keep this port opened.
 
@@ -116,6 +126,7 @@ There's no daemon currently provided. So if you want to use it permanently, many
 
 #### Example with PM2
 
+Make sure PM2 is installed (after installing nodejs, type `npm install -g pm2`)
 1. type `pm2 --name bashmonit -f start /usr/local/sbin/bashmonit --interpreter=bash` to run the process in background
 2. then type `pm2 save` to save this process to a file
 3. finally type `pm2 startup` to ensure that the process will be relaunch if server is rebooted.
@@ -134,6 +145,7 @@ Please feel free to contribute by submitting enhancement or new sensors !
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/charlyie/bashmonit/tags). 
 
 ### Changelog
+* **1.2.0** [may 2021] : change default port, multiple disk sensor 
 * **1.1.1** [nov 2019] : add autoupdate process 
 * **1.1.0** [dec 2018] : first official release (published in nov. 2019).
 * **1.0.0 - 1.0.9** [aug 2017-dec 2018]: internal releases.
