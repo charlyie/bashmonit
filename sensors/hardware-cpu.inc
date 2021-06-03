@@ -12,5 +12,7 @@ sensor_package="hardware"
 
 cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')
 cpu_cores=$(nproc --all)
+cpu_name=$(cat /proc/cpuinfo | grep 'model name' | uniq | sed  's/model name.*:\s*//')
+cpu_frequency=$(grep 'cpu MHz' /proc/cpuinfo | head -1 | awk -F: '{print $2}' | xargs | sed 's/\.[0-9.]*//g')
 
-sensor_output=`printf '"cpu": {"usage":"%s", "cores":"%s"}' "$cpu_usage" "$cpu_cores"`
+sensor_output=`printf '"cpu": {"model":"%s", "frequency":"%s", "cores":"%s", "usage":"%s"}' "$cpu_name" "$cpu_frequency" "$cpu_cores" "$cpu_usage"`

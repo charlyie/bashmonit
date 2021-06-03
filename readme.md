@@ -14,14 +14,16 @@
 ```json
 {
    "system":{
-      "daemon":"bashmonit/1.2.0",
+      "daemon":"bashmonit/1.2.1",
       "generation_date":"Mon May  24 18:21:06 CEST 2021"
    },
    "sensors":{
       "hardware":{
          "cpu":{
-            "usage":"41%",
-            "cores":"2"
+            "model": "AMD Opteron(tm) Processor 4386",
+            "frequency": "3400",
+            "cores":"8",
+            "usage":"41%"
          },
          "disks":{
             "/":{
@@ -145,6 +147,7 @@ Please feel free to contribute by submitting enhancement or new sensors !
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/charlyie/bashmonit/tags). 
 
 ### Changelog
+* **1.2.0** [may 2021] : add cpu model and frequency to CPU sensor
 * **1.2.0** [may 2021] : change default port, multiple disk sensor 
 * **1.1.1** [nov 2019] : add autoupdate process 
 * **1.1.0** [dec 2018] : first official release (published in nov. 2019).
