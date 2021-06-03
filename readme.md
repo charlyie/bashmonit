@@ -14,8 +14,8 @@
 ```json
 {
    "system":{
-      "daemon":"bashmonit/1.2.1",
-      "generation_date":"Mon May  24 18:21:06 CEST 2021"
+      "daemon":"bashmonit/1.2.2",
+      "generation_date":"Mon Jun  3 07:21:06 CEST 2021"
    },
    "sensors":{
       "hardware":{
@@ -25,20 +25,22 @@
             "cores":"8",
             "usage":"41%"
          },
-         "disks":{
-            "/":{
-               "free":"4.0G",
-               "total":"37G",
-               "usage":"90%",
-               "device":"/dev/sda2"
+         "disks":[
+            {
+               "mount_point": "/",
+               "free": "856G",
+               "total": "37T",
+               "usage": "98%",
+               "device": "/dev/sda1"
             },
-            "/srv":{
+            {
+               "mount_point": "/srv",
                "free":"2.0T",
                "total":"37T",
                "usage":"95%",
-               "device":"/dev/sda3"
+               "device":"/dev/sda2"
             }
-         },
+         ],
          "memory":{
             "used":"405MB",
             "total":"2000MB",
@@ -147,7 +149,8 @@ Please feel free to contribute by submitting enhancement or new sensors !
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/charlyie/bashmonit/tags). 
 
 ### Changelog
-* **1.2.0** [may 2021] : add cpu model and frequency to CPU sensor
+* **1.2.2** [jun 2021] : changed disk json format
+* **1.2.1** [jun 2021] : add cpu model and frequency to CPU sensor
 * **1.2.0** [may 2021] : change default port, multiple disk sensor 
 * **1.1.1** [nov 2019] : add autoupdate process 
 * **1.1.0** [dec 2018] : first official release (published in nov. 2019).
