@@ -12,7 +12,7 @@
 
 
 PORT=8765
-VERSION="1.2.1"
+VERSION="1.2.2"
 BUILD_DATE="202106043"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq")
 
