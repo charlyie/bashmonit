@@ -14,7 +14,7 @@
 ```json
 {
    "system":{
-      "daemon":"bashmonit/1.2.2",
+      "daemon":"bashmonit/1.2.3",
       "generation_date":"Mon Jun  3 07:21:06 CEST 2021"
    },
    "sensors":{
@@ -61,7 +61,8 @@
       "system":{
          "os":{
             "hostname":"developer",
-            "distro":"Ubuntu 16.04",
+            "distro":"Ubuntu",
+            "distro_version":"16.04",
             "uptime":"1 days, 22 hours, 12 minutes, 48 seconds"
          },
          "processes":{
@@ -149,6 +150,7 @@ Please feel free to contribute by submitting enhancement or new sensors !
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/charlyie/bashmonit/tags). 
 
 ### Changelog
+* **1.2.3** [jun 2021] : Distinguished JSON entry for OS version
 * **1.2.2** [jun 2021] : changed disk json format
 * **1.2.1** [jun 2021] : add cpu model and frequency to CPU sensor
 * **1.2.0** [may 2021] : change default port, multiple disk sensor 

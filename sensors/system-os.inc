@@ -2,6 +2,7 @@
 # Sensor for Bashmonit
 # Has to return sensor_package and sensor_output variables (json).
 # Since version : 1.0.7
+# Updated in version : 1.2.3
 #
 # The MIT License (MIT)
 # Copyright (c) 2021 Charles Bourgeaux <charles@resmush.it> and contributors
@@ -14,7 +15,8 @@ sensor_package="system"
 hostname=`hostname -a` 2> /dev/null
 
 # Get distro
-distro=`python -c 'import platform ; print platform.linux_distribution()[0] + " " +        platform.linux_distribution()[1]'` 2> /dev/null
+distro=`python -c 'import platform ; print platform.linux_distribution()[0]'` 2> /dev/null
+distro_version=`python -c 'import platform ; print platform.linux_distribution()[1]'` 2> /dev/null
 
 # Get uptime
 if [ -f "/proc/uptime" ]; then
@@ -29,4 +31,4 @@ else
 	uptime=""
 fi
 
-sensor_output=`printf '"os": {"hostname":"%s", "distro":"%s", "uptime":"%s"}' "$hostname" "$distro" "$uptime"`
+sensor_output=`printf '"os": {"hostname":"%s", "distro":"%s", "distro_version":"%s", "uptime":"%s"}' "$hostname" "$distro" "$distro_version" "$uptime"`
