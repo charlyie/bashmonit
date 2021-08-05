@@ -12,8 +12,8 @@
 
 
 PORT=8765
-VERSION="1.2.4"
-BUILD_DATE="20210603"
+VERSION="1.2.5"
+BUILD_DATE="20210805"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq")
 
 HTTP_RESPONSE=/tmp/webresp
@@ -38,7 +38,6 @@ cli_output(){
     printf "${TIME}$1\n"
   fi
 }
-
 
 check_update(){
   _SCRIPT_NAME=`basename "$0" | cut -f 1 -d '.'`
@@ -127,7 +126,6 @@ do_update(){
   fi
 }
 
-
 # Manage arguments
 while [[ $# -gt 0 ]]
 do
@@ -137,7 +135,6 @@ case $key in
     -q|--quiet)
     QUIET=true
     shift # past argument
-    shift # past value
     ;;
     --update)
     shift # past argument
@@ -147,23 +144,33 @@ case $key in
     -h|--help)
     shift # past argument
     cli_output "Bashmonit v.${VERSION}, server Monitoring tool, extensible with custom sensors, and outputing a JSON on a standalone HTTP server" notime
-  cli_output "(c) Charles Bourgeaux <charles@resmush.it>" notime
-  cli_output "Usage: bashmonit [--quiet] [--update]" notime
-  cli_output "Startup:" notime
-  cli_output "  -h or --help \t\t print this help." notime
-  cli_output "  -v or --version \t display the version of Bashmonit" notime
-  cli_output "  --quiet \t\t avoid output display." notime
-  cli_output "  --update \t\t perform an upgrade of this app.\n" notime
-  cli_output "Logs:" notime
-  cli_output "  Output \t\t /var/log/bashmonit.log\n" notime
-  cli_output "Configuration:" notime
-  cli_output "  General \t\t /etc/bashmonit.conf" notime
-  cli_output "  Sensors \t\t /etc/bashmonit.d/*\n" notime
-  exit 0
+    cli_output "(c) Charles Bourgeaux <charles@resmush.it>" notime
+    cli_output "Usage: bashmonit [--quiet] [--update]" notime
+    cli_output "Startup:" notime
+    cli_output "  -h or --help \t\t print this help." notime
+    cli_output "  -v or --version \t display the version of Bashmonit" notime
+    cli_output "  --quiet \t\t avoid output display." notime
+    cli_output "  --update \t\t perform an upgrade of this app.\n" notime
+    cli_output "Logs:" notime
+    cli_output "  Output \t\t /var/log/bashmonit.log\n" notime
+    cli_output "Configuration:" notime
+    cli_output "  General \t\t /etc/bashmonit.conf" notime
+    cli_output "  Sensors \t\t /etc/bashmonit.d/*\n" notime
+    exit 0
     ;;
     -v|--version)
     shift # past argument
     cli_output "Bashmonit v.${VERSION} (build ${BUILD_DATE})" notime
+    exit 0
+    ;;
+    --getkey)
+    shift # past argument
+    if [ ! -f "$INI" ]; then
+      cli_output "No key configured yet. Please launch app at least one time."
+    else
+      KEY=$(awk -F " = " '/key/ {print $2}' $INI)
+      cli_output "Authentication key : $KEY" notime
+    fi
     exit 0
     ;;
     -*)    # unknown option
@@ -234,7 +241,6 @@ else
   KEY=$(awk -F " = " '/key/ {print $2}' $INI)
   PORT=$(awk -F " = " '/port/ {print $2}' $INI)
 fi
-
 cli_output "Authentication key : $KEY"
 
 
