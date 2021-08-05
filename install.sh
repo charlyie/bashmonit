@@ -19,11 +19,40 @@ if [[ `id -u` -ne 0 ]]; then
   exit 0
 fi
 
-read -p "This script will install bashmonit on your system (Y/n) : " AGREE
 
-if [ ! "$AGREE" = "n" ] ;
+# Manage arguments
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+  -h|--help)
+    shift # past argument
+    printf "Bashmonit Installer\n"
+    printf "(c) Charles Bourgeaux <charles@resmush.it>\n"
+    printf "Usage: ./install.sh [--yes]\n"
+    printf "Startup:\n"
+    printf "  -h or --help \t\t print this help.\n"
+    printf "  -y or --yes \t\t to disable prompt.\n"
+    exit 0
+  ;;
+  -y|--yes)
+    AGREE=y
+    shift # past argument
+  ;;
+  *)    # unknown option
+    shift # past argument
+  ;;
+esac
+done
+
+while [[ "$AGREE" != "y" ]] && [[ "$AGREE" != "n" ]] 
+do
+read -p "This script will install bashmonit on your system (Y/n) : " AGREE
+done
+
+if [ "$AGREE" = "y" ] ;
 then
-  
   # Check required packages and try to install them
   for x in ${REQUIRED_PACKAGES[@]}
   do

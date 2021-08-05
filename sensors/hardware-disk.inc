@@ -16,8 +16,8 @@ IFS=$'\n'
 while read output;
 do
 	disk_usage=$(echo $output | awk 'END{print $6}')
-	disk_free=$(echo $output | awk 'END{print $5}')
-	disk_total=$(echo $output | awk 'END{print $3}')
+	disk_free=$(echo $output | awk 'END{print $5"B"}')
+	disk_total=$(echo $output | awk 'END{print $3"B"}')
 	disk_device=$(echo $output | awk 'END{print $1}')
 	mount_point=$(echo $output | awk 'END{print $7}')
 
