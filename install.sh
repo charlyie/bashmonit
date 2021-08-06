@@ -34,7 +34,7 @@ case $key in
     printf "Startup:\n"
     printf "  -h or --help \t\t print this help.\n"
     printf "  -y or --yes \t\t to disable prompt.\n"
-    printf "  --not-first-run \t to disable first run after install.\n"
+    printf "  --no-first-run \t to disable first run after install.\n"
     exit 0
   ;;
   -y|--yes)
