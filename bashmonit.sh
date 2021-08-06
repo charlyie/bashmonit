@@ -12,8 +12,8 @@
 
 
 PORT=8765
-VERSION="1.2.5"
-BUILD_DATE="20210805"
+VERSION="1.2.6"
+BUILD_DATE="20210806"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq")
 
 HTTP_RESPONSE=/tmp/webresp
@@ -151,6 +151,8 @@ case $key in
     cli_output "  -v or --version \t display the version of Bashmonit" notime
     cli_output "  --quiet \t\t avoid output display." notime
     cli_output "  --update \t\t perform an upgrade of this app.\n" notime
+    cli_output "  --get-key \t\t returns security token.\n" notime
+    cli_output "  --get-port \t\t returns app port.\n" notime
     cli_output "Logs:" notime
     cli_output "  Output \t\t /var/log/bashmonit.log\n" notime
     cli_output "Configuration:" notime
@@ -163,13 +165,23 @@ case $key in
     cli_output "Bashmonit v.${VERSION} (build ${BUILD_DATE})" notime
     exit 0
     ;;
-    --getkey)
+    --get-key)
     shift # past argument
     if [ ! -f "$INI" ]; then
-      cli_output "No key configured yet. Please launch app at least one time."
+      cli_output "No configuration file created yet. Please launch app at least one time."
     else
       KEY=$(awk -F " = " '/key/ {print $2}' $INI)
       cli_output "Authentication key : $KEY" notime
+    fi
+    exit 0
+    ;;
+    --get-port)
+    shift # past argument
+    if [ ! -f "$INI" ]; then
+      cli_output "No configuration file created yet. Please launch app at least one time."
+    else
+      PORT=$(awk -F " = " '/port/ {print $2}' $INI)
+      cli_output "Port : $PORT" notime
     fi
     exit 0
     ;;

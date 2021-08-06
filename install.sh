@@ -34,10 +34,15 @@ case $key in
     printf "Startup:\n"
     printf "  -h or --help \t\t print this help.\n"
     printf "  -y or --yes \t\t to disable prompt.\n"
+    printf "  --not-first-run \t to disable first run after install.\n"
     exit 0
   ;;
   -y|--yes)
     AGREE=y
+    shift # past argument
+  ;;
+  --no-first-run)
+    DISABLE_FIRST_RUN=y
     shift # past argument
   ;;
   *)    # unknown option
@@ -110,10 +115,11 @@ EOL
     echo "Bashmonit has been correctly installed."
     APP_VER=`bashmonit -v`
     echo "Version installed : $APP_VER"
-    echo "First run forced !"
   fi
-
-  /usr/local/sbin/bashmonit
+  if [[ $DISABLE_FIRST_RUN != "y" ]]; then
+    echo "First run forced !"
+    /usr/local/sbin/bashmonit
+  fi
 else
   echo "Bashmonit hasn't been installed."
   exit 0

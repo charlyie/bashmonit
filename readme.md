@@ -14,8 +14,8 @@
 ```json
 {
    "system":{
-      "daemon":"bashmonit/1.2.5",
-      "generation_date":"Mon Aug 5 17:21:06 CEST 2021"
+      "daemon":"bashmonit/1.2.6",
+      "generation_date":"Mon Aug 6 10:21:06 CEST 2021"
    },
    "sensors":{
       "hardware":{
@@ -151,6 +151,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
+* **1.2.5** [aug 2021] : Add --get-port method to retrieve PORT, and installer update.
+* **1.2.5** [aug 2021] : Add --get-key method to retrieve APPKEY
 * **1.2.4** [aug 2021] : Installer update
 * **1.2.3** [jun 2021] : Distinguished JSON entry for OS version
 * **1.2.2** [jun 2021] : changed disk json format
