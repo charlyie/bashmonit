@@ -151,7 +151,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
-* **1.2.5** [aug 2021] : Add --get-port method to retrieve PORT, and installer update.
+* **1.2.7** [aug 2021] : Bad CPU core detection (not working fine in Containers)
+* **1.2.6** [aug 2021] : Add --get-port method to retrieve PORT, and installer update.
 * **1.2.5** [aug 2021] : Add --get-key method to retrieve APPKEY
 * **1.2.4** [aug 2021] : Installer update
 * **1.2.3** [jun 2021] : Distinguished JSON entry for OS version
