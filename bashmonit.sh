@@ -12,8 +12,8 @@
 
 
 PORT=8765
-VERSION="1.2.7"
-BUILD_DATE="20210806"
+VERSION="1.2.8"
+BUILD_DATE="20210809"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq")
 
 HTTP_RESPONSE=/tmp/webresp

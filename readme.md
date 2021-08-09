@@ -14,8 +14,8 @@
 ```json
 {
    "system":{
-      "daemon":"bashmonit/1.2.6",
-      "generation_date":"Mon Aug 6 10:21:06 CEST 2021"
+      "daemon":"bashmonit/1.2.8",
+      "generation_date":"Mon Aug 9 7:21:06 CEST 2021"
    },
    "sensors":{
       "hardware":{
@@ -151,6 +151,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
+* **1.2.8** [aug 2021] : Changed CPU % usage method
 * **1.2.7** [aug 2021] : Bad CPU core detection (not working fine in Containers)
 * **1.2.6** [aug 2021] : Add --get-port method to retrieve PORT, and installer update.
 * **1.2.5** [aug 2021] : Add --get-key method to retrieve APPKEY
