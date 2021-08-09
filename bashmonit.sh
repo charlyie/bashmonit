@@ -12,7 +12,7 @@
 
 
 PORT=8765
-VERSION="1.2.8"
+VERSION="1.2.9"
 BUILD_DATE="20210809"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq")
 
@@ -117,7 +117,7 @@ do_update(){
       tar xf /tmp/bashmonit-last-release.tar.gz -C /tmp/bashmonit-last-release
       cli_output "> Executing install..."
       chmod +x /tmp/bashmonit-last-release/*/install.sh
-      /tmp/bashmonit-last-release/*/install.sh
+      /tmp/bashmonit-last-release/*/install.sh --yes --no-first-run
       rm -f $UPDATE_LOCKFILE
       exit 0
     else
