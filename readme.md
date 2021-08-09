@@ -151,6 +151,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
+* **1.2.10** [aug 2021] : fix bad CPU % output
 * **1.2.9** [aug 2021] : Enhanced update method
 * **1.2.8** [aug 2021] : Changed CPU % usage method
 * **1.2.7** [aug 2021] : Bad CPU core detection (not working fine in Containers)
