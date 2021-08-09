@@ -11,7 +11,7 @@
 # as you leave these references intact in the header comments of your source files.
 
 APP_DIR=$(dirname "$0")
-REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc" "jq")
+REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc" "jq" "netcat" "gawk")
 
 # Requires ROOT for NC
 if [[ `id -u` -ne 0 ]]; then

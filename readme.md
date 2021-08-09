@@ -86,9 +86,13 @@
 The daemon needs `ROOT` permissions and some packages such as :
 * nc
 * awk
-* netstat
-* sensors
+* net-tools (`netstat`)
+* lm-sensors (`sensors`)
 * bc
+* gawk
+* jq
+* netcat
+
 At first launch, it will try to install them automatically.
 
 The installation process has been successfully tested on Debian/Ubuntu distributions.
