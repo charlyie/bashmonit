@@ -14,15 +14,15 @@
 ```json
 {
    "system":{
-      "daemon":"bashmonit/1.2.8",
-      "generation_date":"Mon Aug 9 7:21:06 CEST 2021"
+      "daemon":"bashmonit/1.2.11",
+      "generation_date":"Mon Aug 9 9:21:06 CEST 2021"
    },
    "sensors":{
       "hardware":{
          "cpu":{
             "model": "AMD Opteron(tm) Processor 4386",
             "frequency": "3400",
-            "cores":"8",
+            "cores": 8,
             "usage":"41%"
          },
          "disks":[
@@ -47,7 +47,7 @@
             "usage":"20.25%"
          },
          "temperatures":{
-            "cpu":"35"
+            "cpu": 35
          }
       },
       "apps":{
@@ -64,6 +64,7 @@
             "distro":"Ubuntu",
             "distro_version":"16.04",
             "uptime":"1 days, 22 hours, 12 minutes, 48 seconds"
+            "uptime_timestamp": 1504188300
          },
          "processes":{
             "load_average":"0.06",
@@ -151,6 +152,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
+* **1.2.11** [aug 2021] : uptime in timestamp and sensors output in int while necessary
 * **1.2.10** [aug 2021] : fix bad CPU % output
 * **1.2.9** [aug 2021] : Enhanced update method
 * **1.2.8** [aug 2021] : Changed CPU % usage method

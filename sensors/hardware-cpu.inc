@@ -2,7 +2,7 @@
 # Sensor for Bashmonit
 # Has to return sensor_package and sensor_output variables (json).
 # Since version : 1.0.7
-# Updated in version : 1.2.10
+# Updated in version : 1.2.11
 #
 # The MIT License (MIT)
 # Copyright (c) 2021 Charles Bourgeaux <charles@resmush.it> and contributors
@@ -16,4 +16,4 @@ cpu_cores=$(nproc)
 cpu_name=$(cat /proc/cpuinfo | grep 'model name' | uniq | sed  's/model name.*:\s*//')
 cpu_frequency=$(grep 'cpu MHz' /proc/cpuinfo | head -1 | awk -F: '{print $2}' | xargs | sed 's/\.[0-9.]*//g')
 
-sensor_output=`printf '"cpu": {"model":"%s", "frequency":"%s", "cores":"%s", "usage":"%s"}' "$cpu_name" "$cpu_frequency" "$cpu_cores" "$cpu_usage"`
+sensor_output=`printf '"cpu": {"model":"%s", "frequency":"%s", "cores":%d, "usage":"%s"}' "$cpu_name" "$cpu_frequency" "$cpu_cores" "$cpu_usage"`

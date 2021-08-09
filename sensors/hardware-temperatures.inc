@@ -2,6 +2,7 @@
 # Sensor for Bashmonit
 # Has to return sensor_package and sensor_output variables (json).
 # Since version : 1.0.7
+# Updated in version : 1.2.11
 #
 # The MIT License (MIT)
 # Copyright (c) 2021 Charles Bourgeaux <charles@resmush.it> and contributors
@@ -23,4 +24,4 @@ else
 cpu_temp=$(echo "$sum/$count" | bc)
 fi
 
-sensor_output=`printf '"temperatures": {"cpu":"%s"}' "$cpu_temp"`
+sensor_output=`printf '"temperatures": {"cpu":%d}' "$cpu_temp"`

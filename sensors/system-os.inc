@@ -2,7 +2,7 @@
 # Sensor for Bashmonit
 # Has to return sensor_package and sensor_output variables (json).
 # Since version : 1.0.7
-# Updated in version : 1.2.3
+# Updated in version : 1.2.11
 #
 # The MIT License (MIT)
 # Copyright (c) 2021 Charles Bourgeaux <charles@resmush.it> and contributors
@@ -27,8 +27,9 @@ if [ -f "/proc/uptime" ]; then
 	hours=$(( uptime/60/60%24 ))
 	days=$(( uptime/60/60/24 ))
 	uptime="$days days, $hours hours, $minutes minutes, $seconds seconds"
+	uptime_timestamp=$(date -d "$(who -b | awk '{print $4,$3}' | tr - / )" +%s)
 else
 	uptime=""
 fi
 
-sensor_output=`printf '"os": {"hostname":"%s", "distro":"%s", "distro_version":"%s", "uptime":"%s"}' "$hostname" "$distro" "$distro_version" "$uptime"`
+sensor_output=`printf '"os": {"hostname":"%s", "distro":"%s", "distro_version":"%s", "uptime":"%s", "uptime_timestamp":%d}' "$hostname" "$distro" "$distro_version" "$uptime" "$uptime_timestamp"` 
