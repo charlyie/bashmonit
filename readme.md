@@ -14,8 +14,8 @@
 ```json
 {
    "system":{
-      "daemon":"bashmonit/1.2.11",
-      "generation_date":"Mon Aug 9 9:21:06 CEST 2021"
+      "daemon":"bashmonit/1.2.12",
+      "generation_date":"Mon Aug 17 11:21:06 CEST 2021"
    },
    "sensors":{
       "hardware":{
@@ -156,6 +156,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
+* **1.2.12** [aug 2021] : Better support of OS Version detection
 * **1.2.11** [aug 2021] : uptime in timestamp and sensors output in int while necessary
 * **1.2.10** [aug 2021] : fix bad CPU % output
 * **1.2.9** [aug 2021] : Enhanced update method
