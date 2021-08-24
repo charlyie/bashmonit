@@ -2,7 +2,7 @@
 # Sensor for Bashmonit
 # Has to return sensor_package and sensor_output variables (json).
 # Since version : 1.0.x
-# Updated in version : 1.2.2
+# Updated in version : 1.2.13
 #
 # The MIT License (MIT)
 # Copyright (c) 2021 Charles Bourgeaux <charles@resmush.it> and contributors
@@ -11,7 +11,7 @@
 
 sensor_package="hardware"
 
-sensor_output=`printf '"disks": ['`
+sensor_output=`printf '"mount_points": ['`
 IFS=$'\n'
 while read output;
 do

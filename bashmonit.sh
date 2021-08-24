@@ -12,9 +12,9 @@
 
 
 PORT=8765
-VERSION="1.2.12"
-BUILD_DATE="20210817"
-REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq")
+VERSION="1.2.13"
+BUILD_DATE="20210824"
+REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq" "lsblk" "smartctl")
 
 HTTP_RESPONSE=/tmp/webresp
 APP_DIR=$(dirname "$0")

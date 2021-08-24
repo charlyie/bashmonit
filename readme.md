@@ -12,68 +12,90 @@
 ### Output example
 
 ```json
-{
+{{
    "system":{
-      "daemon":"bashmonit/1.2.12",
-      "generation_date":"Mon Aug 17 11:21:06 CEST 2021"
+      "daemon":"bashmonit/1.2.13",
+      "generation_date":"Tue 24 Aug 2021 06:39:34 PM CEST"
    },
    "sensors":{
-      "hardware":{
-         "cpu":{
-            "model": "AMD Opteron(tm) Processor 4386",
-            "frequency": "3400",
-            "cores": 8,
-            "usage":"41%"
-         },
-         "disks":[
-            {
-               "mount_point": "/",
-               "free": "856G",
-               "total": "37T",
-               "usage": "98%",
-               "device": "/dev/sda1"
-            },
-            {
-               "mount_point": "/srv",
-               "free":"2.0T",
-               "total":"37T",
-               "usage":"95%",
-               "device":"/dev/sda2"
-            }
-         ],
-         "memory":{
-            "used":"405MB",
-            "total":"2000MB",
-            "usage":"20.25%"
-         },
-         "temperatures":{
-            "cpu": 35
-         }
-      },
       "apps":{
          "mysql":{
             "status":"online"
          },
          "php":{
-            "version":"7.1.8-2+ubuntu16.04.1+deb.sury.org+4"
+            "version":"7.4.22"
          }
       },
       "system":{
          "os":{
             "hostname":"developer",
-            "distro":"Ubuntu",
-            "distro_version":"16.04",
-            "uptime":"1 days, 22 hours, 12 minutes, 48 seconds"
-            "uptime_timestamp": 1504188300
+            "distro":"Debian",
+            "distro_version":"11.0",
+            "uptime":"10 days, 8 hours, 19 minutes, 3 seconds",
+            "uptime_timestamp":1628929200
          },
          "processes":{
-            "load_average":"0.06",
-            "count":"160",
+            "load_average":"0.00",
+            "count":268,
             "biggest":{
-               "command":"[kworker/0:2]",
-               "pid":"6328",
-               "cpu_usage":"0.8%"
+               "command":"bash",
+               "pid":"3098723",
+               "cpu_usage":"2.0%"
             }
+         }
+      },
+      "hardware":{
+         "cpu":{
+            "model":"Intel(R) Xeon(R) CPU E3-1245 v5 @ 3.50GHz",
+            "frequency":"1200",
+            "cores":8,
+            "usage":"7.04%"
+         },
+         "mount_points":[
+            {
+               "mount_point":"/",
+               "free":"554GB",
+               "total":"936GB",
+               "usage":"38%",
+               "device":"/dev/md1"
+            }
+         ],
+         "disks":[
+            {
+               "disk":"/dev/sda",
+               "serial":"171416BD40D2",
+               "temperature":35,
+               "family_model":"Crucial/Micron Client SSDs",
+               "model":"Micron_1100_MTFDDAK512TBN",
+               "capacity":"512 GB",
+               "smart_status":"PASSED"
+            },
+            {
+               "disk":"/dev/sdb",
+               "serial":"1711166727CA",
+               "temperature":36,
+               "family_model":"Crucial/Micron Client SSDs",
+               "model":"Micron_1100_MTFDDAK512TBN",
+               "capacity":"512 GB",
+               "smart_status":"PASSED"
+            },
+            {
+               "disk":"/dev/sdc",
+               "serial":"1709160C0DFF",
+               "temperature":36,
+               "family_model":"Crucial/Micron Client SSDs",
+               "model":"Micron_1100_MTFDDAK512TBN",
+               "capacity":"512 GB",
+               "smart_status":"PASSED"
+            }
+         ],
+         "memory":{
+            "used":"5229MB",
+            "total":"64104MB",
+            "usage":"8.16%"
+         },
+         "temperatures":{
+            "cpu":33
          }
       }
    }
@@ -92,6 +114,8 @@ The daemon needs `ROOT` permissions and some packages such as :
 * gawk
 * jq
 * netcat
+* lsblk
+* smartmontools (`smartctl`)
 
 At first launch, it will try to install them automatically.
 
@@ -156,6 +180,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
+* **1.2.13** [aug 2021] : Add physical disk information & smart Status
 * **1.2.12** [aug 2021] : Better support of OS Version detection
 * **1.2.11** [aug 2021] : uptime in timestamp and sensors output in int while necessary
 * **1.2.10** [aug 2021] : fix bad CPU % output

@@ -6,12 +6,12 @@
 # Bashmonit Installer
 #
 # The MIT License (MIT)
-# Copyright (c) 2017 Charles Bourgeaux <contact@resmush.it> and contributors
+# Copyright (c) 2017 Charles Bourgeaux <charles@resmush.it> and contributors
 # You are not obligated to bundle the LICENSE file with your projects as long
 # as you leave these references intact in the header comments of your source files.
 
 APP_DIR=$(dirname "$0")
-REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc" "jq" "netcat" "gawk")
+REQUIRED_PACKAGES=( "nc" "awk" "netstat" "sensors" "bc" "jq" "netcat" "gawk" "lsblk" "smartctl")
 
 # Requires ROOT for NC
 if [[ `id -u` -ne 0 ]]; then
@@ -67,6 +67,10 @@ then
     if [[ "$x" == "sensors" ]]
       then
       x="lm-sensors"
+    fi
+    if [[ "$x" == "smartctl" ]]
+      then
+      x="smartmontools"
     fi
     read
     if [[  ! "$REPLY" == "n" ]]; then
