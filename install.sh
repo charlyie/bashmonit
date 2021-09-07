@@ -93,10 +93,8 @@ then
   cp $APP_DIR/bashmonit.sh /usr/local/sbin/bashmonit
   chmod +x /usr/local/sbin/bashmonit
   mkdir -p /etc/bashmonit.d
+  rm -rf /etc/bashmonit.d/*.inc
   cp $APP_DIR/sensors/* /etc/bashmonit.d/ -R
-  #cp $APP_DIR/bashmonitd.sh /etc/init.d/bashmonit
-  #chmod +x /etc/init.d/bashmonit
-  #systemctl daemon-reload
   
   # Create log rotate entry if not exist
   if [ ! -f '/etc/logrotate.d/bashmonit' ]; then

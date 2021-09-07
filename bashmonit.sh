@@ -12,8 +12,8 @@
 
 
 PORT=8765
-VERSION="1.2.13"
-BUILD_DATE="20210824"
+VERSION="1.2.14"
+BUILD_DATE="20210907"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq" "lsblk" "smartctl")
 
 HTTP_RESPONSE=/tmp/webresp
@@ -150,8 +150,8 @@ case $key in
     cli_output "  -h or --help \t\t print this help." notime
     cli_output "  -v or --version \t display the version of Bashmonit" notime
     cli_output "  --quiet \t\t avoid output display." notime
-    cli_output "  --update \t\t perform an upgrade of this app.\n" notime
-    cli_output "  --get-key \t\t returns security token.\n" notime
+    cli_output "  --update \t\t perform an upgrade of this app." notime
+    cli_output "  --get-key \t\t returns security token." notime
     cli_output "  --get-port \t\t returns app port.\n" notime
     cli_output "Logs:" notime
     cli_output "  Output \t\t /var/log/bashmonit.log\n" notime
