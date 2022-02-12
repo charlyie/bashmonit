@@ -14,8 +14,8 @@
 ```json
 {{
    "system":{
-      "daemon":"bashmonit/1.2.14",
-      "generation_date":"Tue 07 Sep 2021 06:39:34 PM CEST"
+      "daemon":"bashmonit/1.2.15",
+      "generation_date":"Sat 12 Feb 2022 06:39:34 PM CEST"
    },
    "sensors":{
       "apps":{
@@ -180,6 +180,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ### Changelog
 
+* **1.2.15** [feb 2022] : Enhance disk performance sensor
 * **1.2.14** [sep 2021] : Fix install process
 * **1.2.13** [aug 2021] : Add physical disk information & smart Status
 * **1.2.12** [aug 2021] : Better support of OS Version detection

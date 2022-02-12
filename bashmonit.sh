@@ -6,14 +6,14 @@
 # Based on bashttp : webserver in bash
 #
 # The MIT License (MIT)
-# Copyright (c) 2017-2021 Charles Bourgeaux <charles@resmush.it> and contributors
+# Copyright (c) 2017-2022 Charles Bourgeaux <charles@resmush.it> and contributors
 # You are not obligated to bundle the LICENSE file with your projects as long
 # as you leave these references intact in the header comments of your source files.
 
 
 PORT=8765
-VERSION="1.2.14"
-BUILD_DATE="20210907"
+VERSION="1.2.15"
+BUILD_DATE="20220212"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq" "lsblk" "smartctl")
 
 HTTP_RESPONSE=/tmp/webresp
