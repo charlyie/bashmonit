@@ -12,8 +12,8 @@
 
 
 PORT=8765
-VERSION="1.2.15"
-BUILD_DATE="20220212"
+VERSION="1.2.16"
+BUILD_DATE="20220301"
 REQUIRED_PACKAGES=( "nc" "awk" "netstat" "bc" "jq" "lsblk" "smartctl")
 
 HTTP_RESPONSE=/tmp/webresp

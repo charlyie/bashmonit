@@ -12,7 +12,7 @@ sensor_package="hardware"
 
 sensor_output=`printf '"disks": ['`
 IFS=$'\n'
-for i in $(lsblk | grep -E "disk" | awk '{print $1}')
+for i in $(lsblk | grep -E "disk" | grep -v "part" | awk '{print $1}')
 do
 	disk_information=$(smartctl -a /dev/$i)
 	disk_temperature=`echo "$disk_information" | awk '/Temperature_Celsius/{print $0}' | awk '{print $10}'`
